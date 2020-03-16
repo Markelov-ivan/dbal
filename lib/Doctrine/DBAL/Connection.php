@@ -474,6 +474,11 @@ class Connection implements DriverConnection
         if ($connection instanceof ServerInfoAwareConnection && ! $connection->requiresQueryForServerVersion()) {
             return $connection->getServerVersion();
         }
+		
+		if($connection instanceof \PDO){
+            /** @var PDO $connection */
+            return $connection->getAttribute(\PDO::ATTR_SERVER_VERSION);
+        }
 
         // Unable to detect platform version.
         return null;
